@@ -49,10 +49,9 @@
         return YES;
     }
     
-    player.volume = 0.5;	// make this changeable via swipe up/down gesture
+    player.volume = 0.5;	// make this changeable via pan (up/down) gesture
     player.numberOfLoops = 0;
 
-    
     if (![player prepareToPlay]) {
         NSLog(@"could not prepare to play");
         return YES;
@@ -81,6 +80,21 @@
     return YES;
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    player.currentTime = 0;
+    
+    if (![player prepareToPlay]) {
+        NSLog(@"could not prepare to play");
+    }
+    
+    if (![player play]) {
+        NSLog(@"could not play");
+    }
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [player stop];
+}
 
 // handle gesture events
 
